@@ -4,7 +4,7 @@ from metric_helper.connections import get_redis_connection
 from metric_helper.exceptions import MetricNotFound
 
 
-__version__ = '0.1'
+__version__ = '0.1.1'
 
 
 
