@@ -246,6 +246,11 @@ class PositiveGauge(Metric):
 
     def decr(self, amount=1, **kwargs):
         current_value = self.redis.get(self.key)
+        try:
+            current_value = int(current_value)
+        except:
+            current_value = 0
+
         if current_value <= 0:
             # Don't decrement this value.
             # A positive gauge cannot be smaller than 0.
