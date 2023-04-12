@@ -16,6 +16,7 @@ class RedisWrapper:
         self.redis = StrictRedis(
             host=settings.REDIS_HOST,
             port=settings.REDIS_PORT,
+            password=settings.REDIS_PASSWORD,
             db=0,
             decode_responses=True,
         )
