@@ -17,8 +17,8 @@ class Metric:
         self.name = name
         self.redis = get_redis_connection()
         self.ts = self.redis.ts()
-        self.retention_msecs = settings.TIMESERIES_RETENTION_MSECS
-        self.retention_seconds = self.retention_msecs / 1000
+        self.retention_msecs = int(settings.TIMESERIES_RETENTION_MSECS)
+        self.retention_seconds = int(self.retention_msecs / 1000)
 
 
     def handle_write_kwargs(self, **kwargs):
