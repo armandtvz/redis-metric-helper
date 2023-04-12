@@ -23,7 +23,7 @@ def get_version(rel_path: str) -> str:
     raise RuntimeError('Unable to find version string.')
 
 
-version = get_version('metrics/__init__.py')
+version = get_version('metric_helper/__init__.py')
 
 
 
