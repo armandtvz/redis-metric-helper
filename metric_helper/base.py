@@ -1,7 +1,10 @@
 from datetime import datetime, timedelta
 
 from metric_helper.conf import settings
-from metric_helper.connections import get_redis_connection
+from metric_helper.connections import (
+    get_redis_connection,
+    get_redis_version,
+)
 from metric_helper.exceptions import MetricNotFound
 
 
@@ -17,6 +20,7 @@ class Metric:
         self.name = name
         self.redis = get_redis_connection()
         self.ts = self.redis.ts()
+        self.redis_version = get_redis_version(self.redis)
         self.retention_msecs = int(settings.TIMESERIES_RETENTION_MSECS)
         self.retention_seconds = int(self.retention_msecs / 1000)
 
@@ -56,11 +60,15 @@ class Metric:
     def expire(self):
         if not self.retention_seconds:
             return
-        self.redis.expire(
-            name=self.key,
-            time=self.retention_seconds,
-            nx=True, # Set expiry only when the key has no expiry.
-        )
+        if (
+            self.redis_version >= 7
+            and self.retention_seconds
+        ):
+            self.redis.expire(
+                name=self.key,
+                time=self.retention_seconds,
+                nx=True, # Set expiry only when the key has no expiry.
+            )
 
 
     #######

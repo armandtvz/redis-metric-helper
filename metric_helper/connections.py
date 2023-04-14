@@ -39,3 +39,24 @@ redis = RedisWrapper()
 def get_redis_connection(decode_responses=True):
     redis.connect()
     return redis.get_connection()
+
+
+
+
+def get_redis_version(conn):
+    """
+    Returns the major version of the Redis instance for the connection.
+
+    :rtype: int
+    """
+    version = conn.info()['redis_version']
+    version = version[0]
+    try:
+        version = int(version)
+    except ValueError:
+        # If first character of version
+        # cannot be cast to an integer;
+        # rather play it safe and set
+        # the version to 0
+        version = 0
+    return version
