@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
 
+from redis.exceptions import ResponseError
+
 from metric_helper.conf import settings
 from metric_helper.connections import (
     get_redis_connection,
@@ -184,15 +186,18 @@ class Timeseries(Metric):
         start = int(start)
         end = int(end)
         bucket_msecs = int(bucket_msecs)
-
-        data = self.ts.range(
-            key=self.key,
-            from_time=start,
-            to_time=end,
-            aggregation_type='sum',
-            bucket_size_msec=bucket_msecs,
-            empty=True,
-        )
+        try:
+            data = self.ts.range(
+                key=self.key,
+                from_time=start,
+                to_time=end,
+                aggregation_type='sum',
+                bucket_size_msec=bucket_msecs,
+                empty=True,
+            )
+        except ResponseError:
+            # TSDB: the key does not exist
+            pass
         if not data:
             data = []
         return data
