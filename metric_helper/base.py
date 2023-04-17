@@ -183,6 +183,7 @@ class Timeseries(Metric):
         end = end.timestamp() * 1000
         bucket_msecs = bucket_secs * 1000
 
+        data = []
         start = int(start)
         end = int(end)
         bucket_msecs = int(bucket_msecs)
