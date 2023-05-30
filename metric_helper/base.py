@@ -9,6 +9,8 @@ from metric_helper.connections import (
 )
 from metric_helper.exceptions import MetricNotFound
 
+redis_version = get_redis_version()
+
 
 
 
@@ -22,7 +24,6 @@ class Metric:
         self.name = name
         self.redis = get_redis_connection()
         self.ts = self.redis.ts()
-        self.redis_version = get_redis_version(self.redis)
         self.retention_msecs = int(settings.TIMESERIES_RETENTION_MSECS)
         self.retention_seconds = int(self.retention_msecs / 1000)
 
@@ -63,7 +64,7 @@ class Metric:
         if not self.retention_seconds:
             return
         if (
-            self.redis_version >= 7
+            redis_version >= 7
             and self.retention_seconds
         ):
             self.redis.expire(
