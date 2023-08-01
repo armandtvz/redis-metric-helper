@@ -30,7 +30,7 @@ class Metric:
 
     def handle_write_kwargs(self, **kwargs):
         value = kwargs.get('value', None)
-        if not value:
+        if value is None:
             raise ValueError('You must provide a value for the metric write method.')
         labels = kwargs.get('labels', {})
         timestamp = kwargs.get('timestamp', '*')
