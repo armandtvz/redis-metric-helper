@@ -22,6 +22,8 @@ class RedisWrapper:
                 host=settings.REDIS_HOST,
                 port=settings.REDIS_PORT,
                 password=settings.REDIS_PASSWORD,
+                socket_connect_timeout=settings.REDIS_SOCKET_CONNECT_TIMEOUT,
+                health_check_interval=settings.REDIS_HEALTH_CHECK_INTERVAL,
                 db=0,
                 decode_responses=True,
             )
