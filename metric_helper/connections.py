@@ -70,19 +70,19 @@ _redis_proxy = _RedisProxy()
 
 
 def get_redis_connection(decode_responses=True):
-    return redis_proxy.connect()
+    return _redis_proxy.connect()
 
 
 
 
 def get_redis():
-    return redis_proxy.connect()
+    return _redis_proxy.connect()
 
 
 
 
 def get_redis_pipe():
-    redis = redis_proxy.connect()
+    redis = _redis_proxy.connect()
     return redis.pipeline()
 
 
