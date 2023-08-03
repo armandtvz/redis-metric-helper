@@ -3,6 +3,10 @@ from metric_helper.base import Timeseries, Counter, Gauge, PositiveGauge
 from metric_helper.connections import get_redis_connection
 from metric_helper.exceptions import MetricNotFound
 
+TIMESERIES = 'timeseries'
+COUNTER = 'counter'
+GAUGE = 'gauge'
+POS_GAUGE = 'positive_gauge'
 
 metric_classes = [
     Timeseries,
@@ -13,16 +17,16 @@ metric_classes = [
 # These string names may not change unless extreme caution is used
 # and the consequences are understood.
 mapping = {
-    'timeseries': Timeseries,
-    'counter': Counter,
-    'gauge': Gauge,
-    'positive_gauge': PositiveGauge,
+    TIMESERIES: Timeseries,
+    COUNTER: Counter,
+    GAUGE: Gauge,
+    POS_GAUGE: PositiveGauge,
 }
 reverse_mapping = {
-    Timeseries: 'timeseries',
-    Counter: 'counter',
-    Gauge: 'gauge',
-    PositiveGauge: 'positive_gauge',
+    Timeseries: TIMESERIES,
+    Counter: COUNTER,
+    Gauge: GAUGE,
+    PositiveGauge: POS_GAUGE,
 }
 
 
