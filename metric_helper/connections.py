@@ -43,6 +43,11 @@ class _RedisProxy:
         socket_connect_timeout = config.get('socket_connect_timeout', 5)
         health_check_interval = config.get('health_check_interval', 30)
 
+        if not host:
+            host = 'localhost'
+        if not port:
+            port = 6379
+
         port = int(port)
         decode_responses = bool(decode_responses)
         socket_connect_timeout = int(socket_connect_timeout)
