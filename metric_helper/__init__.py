@@ -18,8 +18,11 @@ def setup(connection_dict=None):
     from metric_helper.conf import settings
     from metric_helper.logging import configure_logging
     from metric_helper.connections import _redis_proxy
-    configure_logging()
 
+    if _redis_proxy.is_configured:
+        return
+
+    configure_logging()
     # Only configure our Redis proxy object.
     # Do not connect to Redis. If we try to connect here
     # and the connection fails/hangs there's a risk that

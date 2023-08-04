@@ -29,6 +29,13 @@ class _RedisProxy:
         self.connection_dict = connection_dict
 
 
+    @property
+    def is_configured(self):
+        if self.connection_dict:
+            return True
+        return False
+
+
     def connect(self):
         if self.redis:
             return self.redis
