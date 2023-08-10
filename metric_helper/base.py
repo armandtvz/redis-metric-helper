@@ -189,7 +189,7 @@ class Timeseries(Metric):
         end = int(end)
         bucket_msecs = int(bucket_msecs)
         try:
-            data = self.ts.range(
+            data = ts.range(
                 key=self.key,
                 from_time=start,
                 to_time=end,
