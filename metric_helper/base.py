@@ -200,7 +200,7 @@ class Timeseries(Metric):
         except ResponseError:
             # TSDB: the key does not exist
             pass
-        if not data:
+        if not isinstance(data, list):
             data = []
         return data
 
