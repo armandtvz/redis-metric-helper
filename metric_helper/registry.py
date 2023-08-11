@@ -37,9 +37,17 @@ class Registry:
     def __init__(self):
         self.key = 'metrics:registry' # redis hash
         self.redis = get_redis_connection()
-        self.metric_list = []
         self.metrics = {}
+        self._refresh()
 
+
+    def _add(self, name, metric_class):
+        metric = metric_class(name)
+        self.metrics[name] = metric
+        return metric
+
+
+    def _refresh(self):
         # Get the metrics that already exist in the registry on Redis.
         metrics = self.redis.hgetall(self.key)
         for name, metric_type in metrics.items():
@@ -50,19 +58,16 @@ class Registry:
             self._add(name, metric_class)
 
 
-    def _add(self, name, metric_class):
-        metric = metric_class(name)
-        self.metric_list.append(metric)
-        self.metrics[name] = metric
-        return metric
-
-
     def get(self, name):
         metric = None
         try:
             metric = self.metrics[name]
         except KeyError:
-            raise MetricNotFound(name)
+            self._refresh()
+            try:
+                metric = self.metrics[name]
+            except KeyError:
+                raise MetricNotFound(name)
         return metric
 
 
