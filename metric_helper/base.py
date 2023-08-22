@@ -51,7 +51,7 @@ class Metric:
     def handle_read_kwargs(self, **kwargs):
         start = kwargs.get('start', None)
         end = kwargs.get('end', None)
-        bucket_secs = kwargs.get('bucket_secs', None)
+        bucket_secs = kwargs.get('bucket_secs', 3600)
         pipeline = kwargs.get('pipeline', None)
         empty = kwargs.get('empty', True)
         aggregation_type = kwargs.get('aggregation_type', 'sum')
