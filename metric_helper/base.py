@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 
 from redis.exceptions import ResponseError
 
-from metric_helper.conf import settings
 from metric_helper.connections import (
     get_redis_connection,
     get_redis_version,
@@ -10,6 +9,8 @@ from metric_helper.connections import (
 from metric_helper.exceptions import MetricNotFound
 
 redis_version = get_redis_version()
+
+TIMESERIES_RETENTION_MSECS = (3600 * 24 * 61) * 1000 # 61 days
 
 
 
@@ -24,7 +25,7 @@ class Metric:
         self.name = name
         self.redis = get_redis_connection()
         self.ts = self.redis.ts()
-        self.retention_msecs = int(settings.TIMESERIES_RETENTION_MSECS)
+        self.retention_msecs = int(TIMESERIES_RETENTION_MSECS)
         self.retention_seconds = int(self.retention_msecs / 1000)
 
 

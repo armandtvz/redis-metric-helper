@@ -5,8 +5,6 @@ from redis import (
     ConnectionError,
 )
 
-from metric_helper.conf import settings
-
 
 
 
@@ -20,11 +18,11 @@ class _RedisProxy:
     def configure(self, connection_dict=None):
         if not connection_dict:
             connection_dict = {
-                'host': settings.REDIS_HOST,
-                'port': settings.REDIS_PORT,
-                'password': settings.REDIS_PASSWORD,
-                'socket_connect_timeout': settings.REDIS_SOCKET_CONNECT_TIMEOUT,
-                'health_check_interval': settings.REDIS_HEALTH_CHECK_INTERVAL,
+                'host': 'localhost',
+                'port': 6379,
+                'password': '',
+                'socket_connect_timeout': 5,
+                'health_check_interval': 30,
             }
         self.connection_dict = connection_dict
 

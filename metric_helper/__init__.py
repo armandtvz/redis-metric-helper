@@ -15,7 +15,6 @@ def setup(connection_dict=None):
             'health_check_interval': 30, # Default
         }
     """
-    from metric_helper.conf import settings
     from metric_helper.logging import configure_logging
     from metric_helper.connections import _redis_proxy
 
