@@ -55,6 +55,28 @@ class Metric:
         pipeline = kwargs.get('pipeline', None)
         empty = kwargs.get('empty', True)
         aggregation_type = kwargs.get('aggregation_type', 'sum')
+        allowed_agg_types = [
+            'avg',
+            'sum',
+            'min',
+            'max',
+            'range',
+            'count',
+            'first',
+            'last',
+            'std.p',
+            'std.s',
+            'var.p',
+            'var.s',
+            'twa',
+        ]
+        if aggregation_type:
+            if aggregation_type.lower() not in allowed_agg_types:
+                raise ValueError(
+                    f'Invalid value, "{aggregation_type}", for "aggregation_type". '
+                    f'Must be one of "{allowed_agg_types}".'
+                )
+
         return {
             'start': start,
             'end': end,
