@@ -53,11 +53,15 @@ class Metric:
         end = kwargs.get('end', None)
         bucket_secs = kwargs.get('bucket_secs', None)
         pipeline = kwargs.get('pipeline', None)
+        empty = kwargs.get('empty', True)
+        aggregation_type = kwargs.get('aggregation_type', 'sum')
         return {
             'start': start,
             'end': end,
             'bucket_secs': bucket_secs,
             'pipeline': pipeline,
+            'empty': empty,
+            'aggregation_type': aggregation_type,
         }
 
 
@@ -176,6 +180,8 @@ class Timeseries(Metric):
         end = values['end']
         bucket_secs = values['bucket_secs']
         pipeline = values['pipeline']
+        empty = values['empty']
+        aggregation_type = values['aggregation_type']
 
         ts = self.ts
         if pipeline:
@@ -194,9 +200,9 @@ class Timeseries(Metric):
                 key=self.key,
                 from_time=start,
                 to_time=end,
-                aggregation_type='sum',
+                aggregation_type=aggregation_type,
                 bucket_size_msec=bucket_msecs,
-                empty=True,
+                empty=empty,
             )
         except ResponseError:
             # TSDB: the key does not exist
