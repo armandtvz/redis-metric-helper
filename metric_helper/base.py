@@ -242,7 +242,6 @@ class Gauge(Metric):
 
 
     def decr(self, amount=1, **kwargs):
-        current_value = self.redis.get(self.key)
         self.redis.decr(
             self.key,
             amount=amount,
