@@ -29,7 +29,7 @@ class Metric:
         self.retention_seconds = int(self.retention_msecs / 1000)
 
 
-    def handle_write_kwargs(self, **kwargs):
+    def _handle_write_kwargs(self, **kwargs):
         value = kwargs.get('value', None)
         if value is None:
             raise ValueError('You must provide a value for the metric write method.')
@@ -48,7 +48,7 @@ class Metric:
         }
 
 
-    def handle_read_kwargs(self, **kwargs):
+    def _handle_read_kwargs(self, **kwargs):
         start = kwargs.get('start', None)
         end = kwargs.get('end', None)
         bucket_secs = kwargs.get('bucket_secs', 3600)
@@ -164,7 +164,7 @@ class Timeseries(Metric):
 
 
     def add_sample(self, **kwargs):
-        values = self.handle_write_kwargs(**kwargs)
+        values = self._handle_write_kwargs(**kwargs)
         value = values['value']
         labels = values['labels']
         timestamp = values['timestamp']
@@ -197,7 +197,7 @@ class Timeseries(Metric):
 
 
     def range(self, **kwargs):
-        values = self.handle_read_kwargs(**kwargs)
+        values = self._handle_read_kwargs(**kwargs)
         start = values['start']
         end = values['end']
         bucket_secs = values['bucket_secs']
