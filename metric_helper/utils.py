@@ -1,8 +1,12 @@
 from io import BytesIO
 from datetime import datetime, timedelta
 
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
+try:
+    import matplotlib.pyplot as plt
+    import matplotlib.dates as mdates
+except ImportError:
+    plt = None
+    mdates = None
 
 
 
