@@ -313,7 +313,6 @@ class Metrics:
                 f'int, float or Decimal. Got type "{_type}".'
             )
 
-        print('is', value, method, operand)
         compare = getattr(value, method)
         return compare(operand)
 

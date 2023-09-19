@@ -19,7 +19,6 @@ class _RedisProxy:
         if not connection_dict:
             return
         if self.is_configured:
-            print('already configed:', connection_dict)
             return
         if not connection_dict:
             connection_dict = {
@@ -30,7 +29,6 @@ class _RedisProxy:
                 'health_check_interval': 30,
             }
         self.connection_dict = connection_dict
-        print(self.connection_dict)
 
 
     @property
