@@ -17,6 +17,11 @@ class _RedisProxy:
 
     def configure(self, connection_dict=None):
         if not connection_dict:
+            return
+        if self.is_configured:
+            print('already configed:', connection_dict)
+            return
+        if not connection_dict:
             connection_dict = {
                 'host': 'localhost',
                 'port': 6379,
@@ -25,6 +30,7 @@ class _RedisProxy:
                 'health_check_interval': 30,
             }
         self.connection_dict = connection_dict
+        print(self.connection_dict)
 
 
     @property
@@ -44,7 +50,6 @@ class _RedisProxy:
         host = config.get('host', 'localhost')
         port = config.get('port', 6379)
         password = config.get('password', '')
-        decode_responses = config.get('decode_responses', True)
         socket_connect_timeout = config.get('socket_connect_timeout', 5)
         health_check_interval = config.get('health_check_interval', 30)
 
@@ -52,9 +57,10 @@ class _RedisProxy:
             host = 'localhost'
         if not port:
             port = 6379
+        if not password:
+            password = ''
 
         port = int(port)
-        decode_responses = bool(decode_responses)
         socket_connect_timeout = int(socket_connect_timeout)
         health_check_interval = int(health_check_interval)
 
@@ -64,7 +70,7 @@ class _RedisProxy:
             password=password,
             socket_connect_timeout=socket_connect_timeout,
             health_check_interval=health_check_interval,
-            decode_responses=decode_responses,
+            decode_responses=True,
             db=0,
         )
         return self.redis
@@ -79,7 +85,7 @@ _redis_proxy = _RedisProxy()
 
 
 
-def get_redis_connection(decode_responses=True):
+def get_redis_connection():
     return _redis_proxy.connect()
 
 

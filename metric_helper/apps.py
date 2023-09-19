@@ -10,4 +10,17 @@ class MetricHelperConfig(AppConfig):
 
     def ready(self):
         from metric_helper import setup
-        setup()
+        from django.conf import settings
+
+        host = getattr(settings, 'METRICS_REDIS_HOST', 'localhost')
+        port = getattr(settings, 'METRICS_REDIS_PORT', 6379)
+        password = getattr(settings, 'METRICS_REDIS_PASSWORD', '')
+
+        setup(
+            connection_dict={
+                'host': host,
+                'port': port,
+                'password': password,
+            },
+            timezone=settings.TIME_ZONE,
+        )
