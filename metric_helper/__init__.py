@@ -98,8 +98,6 @@ def setup(connection_dict=None, timezone=None, trim_ms=False):
     settings.set_tz(timezone)
     settings.TRIM_MS = trim_ms
 
-    print('setup:', connection_dict)
-
     # if _redis_proxy.is_configured:
     #     return
 
