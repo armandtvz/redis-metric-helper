@@ -561,6 +561,7 @@ class Timeseries(Metric):
         kwargs['bucket_secs'] = bucket_secs
         kwargs['start'] = start
         kwargs['end'] = end
+        kwargs['latest'] = True
         data = self.range(**kwargs)
 
         total = 0
