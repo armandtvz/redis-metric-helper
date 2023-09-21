@@ -246,6 +246,7 @@ class Timeseries(Metric):
         bucket_msecs = int(bucket_secs * 1000)
         pipeline = kwargs.get('pipeline', None)
         empty = kwargs.get('empty', False)
+        latest = kwargs.get('latest', False)
         agg_type = kwargs.get('agg_type', 'sum')
 
         if agg_type:
@@ -269,6 +270,7 @@ class Timeseries(Metric):
             'bucket_msecs': bucket_msecs,
             'pipeline': pipeline,
             'empty': empty,
+            'latest': latest,
             'agg_type': agg_type,
         }
 
@@ -473,6 +475,7 @@ class Timeseries(Metric):
         bucket_msecs = values['bucket_msecs']
         pipeline = values['pipeline']
         empty = values['empty']
+        latest = values['latest']
         agg_type = values['agg_type']
 
         # print('')
@@ -499,6 +502,7 @@ class Timeseries(Metric):
                 aggregation_type=agg_type,
                 bucket_size_msec=bucket_msecs,
                 empty=empty,
+                latest=latest,
             )
         except ResponseError:
             # TSDB: the key does not exist
