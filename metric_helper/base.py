@@ -596,7 +596,7 @@ class Timeseries(Metric):
         period = (end - start).total_seconds()
         data = self.range(**kwargs)
         count = data.count() / period
-        return data.mean()
+        return data.mean
 
 
     @deferrable
