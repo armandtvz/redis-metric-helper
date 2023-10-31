@@ -272,6 +272,7 @@ class Metrics:
 
         method = None
         kwarg = None
+        # TODO: allow combining various comparison functions
         if 'gt' in kwargs:
             kwarg = 'gt'
             method = '__gt__'
