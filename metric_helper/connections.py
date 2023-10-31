@@ -18,16 +18,6 @@ class _RedisProxy:
     def configure(self, connection_dict=None):
         if not connection_dict:
             return
-        if self.is_configured:
-            return
-        if not connection_dict:
-            connection_dict = {
-                'host': 'localhost',
-                'port': 6379,
-                'password': '',
-                'socket_connect_timeout': 5,
-                'health_check_interval': 30,
-            }
         self.connection_dict = connection_dict
 
 
@@ -42,8 +32,10 @@ class _RedisProxy:
         if self.redis:
             return self.redis
         if not self.connection_dict:
-            self.configure()
-
+            raise ValueError(
+                'Redis "connection_dict" not configured. '
+                'Did you call "metrics.setup()"?'
+            )
         config = self.connection_dict
         host = config.get('host', 'localhost')
         port = config.get('port', 6379)
