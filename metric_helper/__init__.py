@@ -341,6 +341,17 @@ class Metrics:
         pipe.execute()
 
 
+    def auto_add_rules(self, agg_type='sum', **kwargs):
+        from metric_helper.connections import get_redis
+
+        redis = get_redis()
+        keys = redis.scan_iter(_type='TSDB-TYPE')
+        for key in keys:
+            if '--agg_' in key:
+                continue
+            metric = metrics.get(key)
+            metric.auto_add_rules(agg_type=agg_type, **kwargs)
+            metric.backfill()
 
 
 metrics = Metrics()
