@@ -789,26 +789,22 @@ class Timeseries(Metric):
         self.add_rule(
            agg_type=agg_type,
            bucket_secs=60,
-           # retention_days=31,
-           retention_days=367,
+           retention_days=32,
         )
         self.add_rule(
            agg_type=agg_type,
            bucket_secs=900,
-           # retention_days=61,
-           retention_days=367,
+           retention_days=128,
         )
         self.add_rule(
            agg_type=agg_type,
            bucket_secs=3600,
-           # retention_days=367,
            retention_days=367,
         )
         self.add_rule(
            agg_type=agg_type,
            bucket_secs=86400,
-           # retention_days=367,
-           retention_days=367,
+           retention_days=734,
         )
 
 
