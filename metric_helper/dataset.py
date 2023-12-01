@@ -128,5 +128,5 @@ class Dataset:
 
     def draw(self, title, all_xticks=False, filename=None):
         if all_xticks:
-            return utils.draw_all_xticks(self.data, title, filename=None)
-        return utils.draw(self.data, title, filename=None)
+            return utils.draw_all_xticks(self.data, title, filename=filename)
+        return utils.draw(self.data, title, filename=filename)
