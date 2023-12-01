@@ -727,6 +727,8 @@ class Timeseries(Metric):
         """
         Compaction rules destination key naming conventions::
 
+            {source_key}--agg_{bucket_seconds}_{agg_type}
+
             posfix:sent:sender:123:test_emails
             posfix:sent:sender:123:test_emails--agg_60_sum
             posfix:sent:sender:123:test_emails--agg_900_sum
@@ -759,20 +761,30 @@ class Timeseries(Metric):
         if retention_days is None:
             retention_days = 61
         retention_msecs = int(retention_days * 24 * 60 * 60 * 1000)
+        bucket_msecs = bucket_secs * 1000
 
         dest_key = f'{self.key}--agg_{bucket_secs}_{agg_type}'
         exists = self.redis.exists(dest_key)
         if exists:
-            raise ValueError(f'{dest_key} already exists')
-            # print('already exists')
-            # TODO raise error or fail silently
-            return
-
-        bucket_msecs = bucket_secs * 1000
-        self.ts.create(
-            dest_key,
-            retention_msecs,
-        )
+            rules = self.rules()
+            if isinstance(rules, list):
+                for rule in rules:
+                    if rule.key == dest_key:
+                        raise ValueError(
+                            f'Rule for "{dest_key}" already exists.'
+                        )
+            # The key exists but is not related to a rule.
+            # Make sure the retention is set correctly before
+            # creating the rule.
+            self.ts.alter(
+                key=dest_key,
+                retention_msecs=retention_msecs,
+            )
+        else:
+            self.ts.create(
+                dest_key,
+                retention_msecs,
+            )
         self.ts.createrule(
             self.key,
             dest_key,
