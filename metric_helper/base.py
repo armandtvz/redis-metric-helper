@@ -248,6 +248,7 @@ class Timeseries(Metric):
         empty = kwargs.get('empty', False)
         latest = kwargs.get('latest', True)
         agg_type = kwargs.get('agg_type', 'sum')
+        use_source = kwargs.get('use_source', False)
 
         if agg_type:
             agg_type = agg_type.lower()
@@ -258,7 +259,7 @@ class Timeseries(Metric):
                 )
 
         key = self.key
-        if not self.is_compaction:
+        if not self.is_compaction and not use_source:
             # Can only select a key if this is not a compaction
             key = self._get_best_key(bucket_secs)
 
@@ -272,6 +273,7 @@ class Timeseries(Metric):
             'empty': empty,
             'latest': latest,
             'agg_type': agg_type,
+            'use_source': use_source,
         }
 
 
