@@ -246,7 +246,7 @@ class Timeseries(Metric):
         bucket_msecs = int(bucket_secs * 1000)
         pipeline = kwargs.get('pipeline', None)
         empty = kwargs.get('empty', False)
-        latest = kwargs.get('latest', False)
+        latest = kwargs.get('latest', True)
         agg_type = kwargs.get('agg_type', 'sum')
 
         if agg_type:
