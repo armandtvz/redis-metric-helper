@@ -889,7 +889,6 @@ class Timeseries(Metric):
         best_key = None
         for rule in rules:
             if rule.bucket_secs <= query_bucket_secs:
-                matching_bucket = rule.bucket_secs
                 best_key = rule.key
 
         if best_key:
