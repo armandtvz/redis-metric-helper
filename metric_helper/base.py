@@ -713,6 +713,8 @@ class Timeseries(Metric):
         start = end - delta
         kwargs['start'] = start
         kwargs['end'] = end
+        if not 'bucket_secs' in kwargs:
+            kwargs['bucket_secs'] = int(delta.total_seconds())
         return self.range(**kwargs)
 
 
