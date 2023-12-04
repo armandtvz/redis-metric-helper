@@ -14,7 +14,7 @@ from metric_helper.base import (
 from metric_helper.conf import settings
 
 
-__version__ = '0.7.4'
+__version__ = '0.7.5'
 
 TIMESERIES = 'timeseries'
 TS = 'ts'
