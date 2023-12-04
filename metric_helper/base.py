@@ -801,7 +801,7 @@ class Timeseries(Metric):
         self.add_rule(
            agg_type=agg_type,
            bucket_secs=60,
-           retention_days=15,
+           retention_days=8,
         )
         self.add_rule(
            agg_type=agg_type,
