@@ -204,6 +204,22 @@ class Metrics:
                 period='24h',
                 gt=30,
             )
+
+        .. note::
+
+            The ``period`` kwarg should preferably not be set to the size
+            of an existing time bucket (aggregate/rule) for that metric.
+            Doing so will lead to inaccurate results. For example, if
+            you have a metric named ``api:requests`` and this metric
+            has a compaction rule where the size/duration of the bucket
+            is one minute: you must not set the ``period`` kwarg to ``1m``.
+            If you do, the time range being queried will be used to select
+            the most appropriate key to query; which in this case would be
+            ``api:requests--agg_60_sum`` (assuming the ``SUM`` aggregator is
+            used). Querying this key for the range of ``now() - 60 seconds``
+            would result in querying a partial bucket; considering that the
+            minute we are in is not over yet. Therefore, it would be better
+            to query for the last 2 minutes.
         """
         functions = [
             'gt',
